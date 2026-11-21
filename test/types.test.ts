@@ -7,7 +7,7 @@ import DefaultClient, {
   type BunKnexConfig,
   type BunSqlite3Connection,
   type BunSqlite3ConnectionOptions,
-} from "@krol-x/knex-bun-sqlite";
+} from "knex-bun-sqlite3";
 
 describe("TypeScript types", () => {
   test("bunKnex accepts string and object connections and returns Knex", async () => {

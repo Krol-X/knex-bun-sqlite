@@ -1,11 +1,8 @@
 {
-  "name": "@krol-x/knex-bun-sqlite",
+  "name": "knex-bun-sqlite3",
   "version": "0.1.0",
   "description": "Knex.js dialect for Bun’s built-in bun:sqlite driver",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "type": "commonjs",
   "main": "./index.cjs",
   "types": "./index.d.ts",
@@ -18,7 +15,7 @@
     }
   },
   "bin": {
-    "knex-bun-sqlite": "./cli.cjs"
+    "knex-bun-sqlite3": "./cli.cjs"
   },
   "files": [
     "index.cjs",

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Knex } from "knex";
-import { bunKnex, loadExtension } from "@krol-x/knex-bun-sqlite";
+import { bunKnex, loadExtension } from "knex-bun-sqlite3";
 
 describe("file-backed databases and readonly mode", () => {
   let tmpDir: string;

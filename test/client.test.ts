@@ -5,7 +5,7 @@ import DefaultExport, {
   Client_BunSQLite3,
   bunKnex,
   loadExtension,
-} from "@krol-x/knex-bun-sqlite";
+} from "knex-bun-sqlite3";
 
 const cjsExports = require("../index.cjs");
 

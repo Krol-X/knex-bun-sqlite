@@ -12,8 +12,8 @@ const { createRequire } = require('node:module');
 
 if (typeof Bun === 'undefined') {
   console.error(
-    'knex-bun-sqlite: this CLI must run on Bun (bun:sqlite is unavailable in Node).\n' +
-      'Run it with `bunx knex-bun-sqlite <command>` or `bun run knex-bun-sqlite <command>`.'
+    'knex-bun-sqlite3: this CLI must run on Bun (bun:sqlite is unavailable in Node).\n' +
+      'Run it with `bunx knex-bun-sqlite3 <command>` or `bun run knex-bun-sqlite3 <command>`.'
   );
   process.exit(1);
 }
@@ -27,7 +27,7 @@ function resolveKnexCli() {
       return require.resolve('knex/bin/cli.js');
     } catch {
       console.error(
-        'knex-bun-sqlite: could not find knex. Install it in your project with `bun add knex`.'
+        'knex-bun-sqlite3: could not find knex. Install it in your project with `bun add knex`.'
       );
       process.exit(1);
     }

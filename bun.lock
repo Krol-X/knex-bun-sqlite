@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@krol-x/knex-bun-sqlite",
+      "name": "knex-bun-sqlite3",
       "devDependencies": {
         "@types/bun": "^1.4.5",
         "knex": "^3.3.0",
