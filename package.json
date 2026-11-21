@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Krol-X/knex-bun-sqlite.git"
+    "url": "git+https://github.com/Krol-X/knex-bun-sqlite3.git"
   },
   "bugs": {
-    "url": "https://github.com/Krol-X/knex-bun-sqlite/issues"
+    "url": "https://github.com/Krol-X/knex-bun-sqlite3/issues"
   },
-  "homepage": "https://github.com/Krol-X/knex-bun-sqlite#readme",
+  "homepage": "https://github.com/Krol-X/knex-bun-sqlite3#readme",
   "peerDependencies": {
     "knex": ">=3.0.0 <4"
   },
