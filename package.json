@@ -1,0 +1,62 @@
+{
+  "name": "@krol-x/knex-bun-sqlite",
+  "version": "0.1.0",
+  "description": "Knex.js dialect for Bun’s built-in bun:sqlite driver",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs",
+      "default": "./index.cjs"
+    }
+  },
+  "bin": {
+    "knex-bun-sqlite": "./cli.cjs"
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "cli.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run typecheck && bun test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Krol-X/knex-bun-sqlite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Krol-X/knex-bun-sqlite/issues"
+  },
+  "homepage": "https://github.com/Krol-X/knex-bun-sqlite#readme",
+  "peerDependencies": {
+    "knex": ">=3.0.0 <4"
+  },
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "keywords": [
+    "knex",
+    "bun",
+    "sqlite",
+    "bun-sqlite",
+    "dialect"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.4.5",
+    "knex": "^3.3.0",
+    "typescript": "^7.0.2"
+  }
+}
