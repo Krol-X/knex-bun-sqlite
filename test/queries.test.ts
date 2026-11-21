@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import type { Knex } from "knex";
-import { bunKnex } from "@krol-x/knex-bun-sqlite";
+import { bunKnex } from "knex-bun-sqlite3";
 
 describe("CRUD and query execution", () => {
   let db: Knex;

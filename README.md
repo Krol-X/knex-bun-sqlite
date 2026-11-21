@@ -1,4 +1,4 @@
-# @krol-x/knex-bun-sqlite
+# knex-bun-sqlite3
 
 A Knex.js dialect for Bun’s built-in `bun:sqlite` driver. It reuses Knex’s `better-sqlite3` dialect and adapts the differences in connection setup and query results.
 
@@ -7,17 +7,17 @@ A Knex.js dialect for Bun’s built-in `bun:sqlite` driver. It reuses Knex’s `
 ## Install
 
 ```sh
-bun add @krol-x/knex-bun-sqlite knex
+bun add knex-bun-sqlite3 knex
 ```
 
 ## Usage
 
 ```js
 // CommonJS
-const { bunKnex } = require('@krol-x/knex-bun-sqlite');
+const { bunKnex } = require('knex-bun-sqlite3');
 
 // or ESM
-// import { bunKnex } from '@krol-x/knex-bun-sqlite';
+// import { bunKnex } from 'knex-bun-sqlite3';
 
 const db = bunKnex({
   connection: { filename: './data.sqlite' },
@@ -51,7 +51,7 @@ const db = bunKnex({
 Use `loadExtension()` to load an extension on the Knex connection. The helper assumes the SQLite pool uses exactly one connection, as in the example above.
 
 ```js
-const { bunKnex, loadExtension } = require('@krol-x/knex-bun-sqlite');
+const { bunKnex, loadExtension } = require('knex-bun-sqlite3');
 
 const db = bunKnex({
   connection: { filename: './data.sqlite' },
@@ -65,18 +65,18 @@ The extension must be compatible with the SQLite library bundled with the instal
 
 ## Migrations CLI
 
-Knex’s built-in `knex` binary uses `#!/usr/bin/env node`, so running `bunx knex migrate:latest` executes under Node where `bun:sqlite` is unavailable. Use the bundled `knex-bun-sqlite` CLI wrapper to run any Knex CLI command under Bun:
+Knex’s built-in `knex` binary uses `#!/usr/bin/env node`, so running `bunx knex migrate:latest` executes under Node where `bun:sqlite` is unavailable. Use the bundled `knex-bun-sqlite3` CLI wrapper to run any Knex CLI command under Bun:
 
 ```sh
-bun run knex-bun-sqlite migrate:latest
-bun run knex-bun-sqlite migrate:rollback
-bun run knex-bun-sqlite seed:run
+bunx knex-bun-sqlite3 migrate:latest
+bunx knex-bun-sqlite3 migrate:rollback
+bunx knex-bun-sqlite3 seed:run
 ```
 
 Example `knexfile.cjs`:
 
 ```js
-const Client_BunSQLite3 = require('@krol-x/knex-bun-sqlite');
+const Client_BunSQLite3 = require('knex-bun-sqlite3');
 
 module.exports = {
   client: Client_BunSQLite3,
