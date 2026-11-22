@@ -1,9 +1,9 @@
 import type { Knex } from "knex";
 
 export interface BunSqlite3ConnectionOptions {
-  /** Открыть базу только на чтение. Внимание: `false` в bun:sqlite ломает open, поэтому omit. */
+  /** Open the database in read-only mode. Omit for writable connections. */
   readonly?: true;
-  /** Возвращать INTEGER как bigint. */
+  /** Return SQLite INTEGER values as `bigint`. */
   safeIntegers?: boolean;
 }
 
@@ -20,9 +20,10 @@ export declare class Client_BunSQLite3 extends Knex.Client {
   constructor(config: BunKnexConfig | Knex.Config);
 }
 
+/** Create a Knex instance configured with `Client_BunSQLite3`. */
 export declare function bunKnex(config: BunKnexConfig): Knex;
 
-/** Загружает нативное расширение (sqlite-vec и т.п.) в соединение knex. */
+/** Load a native SQLite extension into the pooled Knex connection. */
 export declare function loadExtension(db: Knex, path: string): Promise<Knex>;
 
 export default Client_BunSQLite3;
