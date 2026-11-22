@@ -1,23 +1,21 @@
 const Client_BetterSQLite3 = require('knex/lib/dialects/better-sqlite3');
 
 /**
- * knex-диалект поверх встроенного в Bun драйвера `bun:sqlite`.
+ * Knex dialect backed by Bun's built-in `bun:sqlite` driver.
  *
- * API bun:sqlite повторяет better-sqlite3, поэтому наследуем его диалект
- * и переопределяем ровно три места, где bun:sqlite отличается:
- *   1. _driver()               — конструктор лежит в именованном экспорте модуля
- *   2. acquireRawConnection()  — нельзя передавать readonly:false и пустой объект опций
- *   3. _query()                — нет statement.reader, зато есть statement.columnNames
+ * Extends Knex's `better-sqlite3` client and adapts the three places where
+ * `bun:sqlite` differs:
+ *   1. _driver()              — Database is a named export rather than the module itself
+ *   2. acquireRawConnection() — omits `readonly: false` and empty option objects
+ *   3. _query()               — uses `statement.columnNames` instead of `.reader` and finalizes statements
  *
- * driverName намеренно остаётся 'better-sqlite3': от него зависит
- * FunctionHelper.uuid(), который по имени диалекта выбирает выражение для
- * db.fn.uuid(). _packageName нужен только для текста ошибки initializeDriver.
+ * `driverName` intentionally stays 'better-sqlite3' so Knex helpers such as
+ * `db.fn.uuid()` recognize the dialect. `_packageName` is only used in error messages.
  */
 class Client_BunSQLite3 extends Client_BetterSQLite3 {
   _packageName = 'bun:sqlite';
 
   _driver() {
-    // В отличие от better-sqlite3, модуль bun:sqlite сам конструктором не является.
     return require('bun:sqlite').Database;
   }
 
@@ -26,12 +24,11 @@ class Client_BunSQLite3 extends Client_BetterSQLite3 {
     const safeIntegers = this._optSafeIntegers(options);
 
     const opts = {
-      // Ловушка Bun: readonly:false роняет open с "bad parameter or other API misuse".
+      // Omit `readonly: false` and empty option objects for compatibility with bun:sqlite.
       ...(options.readonly ? { readonly: true } : {}),
       ...(safeIntegers === undefined ? {} : { safeIntegers }),
     };
 
-    // Вторая ловушка: даже пустой объект опций bun:sqlite не принимает.
     return Object.keys(opts).length
       ? new this.driver(this.connectionSettings.filename, opts)
       : new this.driver(this.connectionSettings.filename);
@@ -48,8 +45,7 @@ class Client_BunSQLite3 extends Client_BetterSQLite3 {
 
       const bindings = this._formatBindings(obj.bindings);
 
-      // Замена better-sqlite3 `.reader`: у SELECT/RETURNING columnNames непуст,
-      // у INSERT/UPDATE/DELETE пуст. .all() на мутации вернул бы пустой массив.
+      // SELECT / RETURNING statements expose columnNames; plain mutations do not.
       if (statement.columnNames.length > 0) {
         obj.response = statement.all(...bindings);
         return obj;
@@ -69,12 +65,8 @@ class Client_BunSQLite3 extends Client_BetterSQLite3 {
 Object.assign(Client_BunSQLite3.prototype, { driverName: 'better-sqlite3' });
 
 /**
- * Загружает нативное расширение (sqlite-vec и т.п.) в соединение knex.
- *
- * Расширение живёт на уровне соединения, а пул sqlite у knex — ровно
- * min=1/max=1 соединение, поэтому после releaseConnection расширение
- * остаётся доступным и обычным запросам, и транзакциям.
- * Вызывать нужно один раз на каждый экземпляр knex (и повторять в каждом процессе).
+ * Load a native SQLite extension into the pooled Knex connection.
+ * Assumes a single-connection SQLite pool (min: 1, max: 1).
  */
 async function loadExtension(db, path) {
   const conn = await db.client.acquireConnection();
@@ -87,9 +79,7 @@ async function loadExtension(db, path) {
 }
 
 /**
- * Обёртка ради ergonomics: knex не даёт зарегистрировать строковый алиас
- * (SUPPORTED_CLIENTS в constants.js — Object.freeze), зато явно поддерживает
- * передачу конструктора диалекта. Здесь это спрятано за привычным API.
+ * Create a Knex instance configured with `Client_BunSQLite3`.
  */
 function bunKnex(config) {
   const knexFactory = require('knex');

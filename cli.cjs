@@ -2,10 +2,8 @@
 'use strict';
 
 /**
- * Обёртка над Knex CLI, гарантирующая запуск под Bun.
- *
- * Бинарник `knex/bin/cli.js` использует шебанг `#!/usr/bin/env node`, поэтому
- * `bunx knex ...` запускается в Node, где модуль `bun:sqlite` недоступен.
+ * Runs the Knex CLI under Bun.
+ * `knex/bin/cli.js` uses `#!/usr/bin/env node`, where `bun:sqlite` is unavailable.
  */
 const path = require('node:path');
 const { createRequire } = require('node:module');
